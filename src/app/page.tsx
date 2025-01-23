@@ -1,7 +1,9 @@
+import Navbar from "@/components/Navbar";
+
 export default function Home() {
   return (
-    <div>
-      <h1>Hello World!</h1>
+    <div className="flex flex-col gap-4 min-h-screen">
+      <Navbar></Navbar>;
     </div>
   );
 }
