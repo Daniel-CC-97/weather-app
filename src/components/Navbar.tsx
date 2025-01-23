@@ -8,7 +8,7 @@ type Props = {};
 export default function Navbar({}: Props) {
   return (
     <nav className="bg-black-900 text-black-300 shadow-sm sticky top-0 left-0 z-50">
-      <div className="p-6 w-full flex justify-between items-center max-w-7xl mx-auto">
+      <div className="p-6 w-full flex flex-wrap justify-between items-center max-w-7xl mx-auto">
         <p className="flex items-center justify-center gap-2">
           <h2 className="text-3xl text-black-300">Weather</h2>
           <IoSunny className="text-3xl text-yellow-600 mt-1" />
