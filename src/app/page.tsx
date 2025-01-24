@@ -15,9 +15,6 @@ import { useAtom } from "jotai";
 import { loadingCityAtom, placeAtom } from "./atom";
 import { useEffect } from "react";
 
-const API =
-  "https://api.openweathermap.org/data/2.5/forecast?q=london&appid=2d204e5cd64299f2b4b15b4b187843bb&cnt=56";
-
 type WeatherData = {
   cod: string;
   message: number;
@@ -89,10 +86,10 @@ type Coordinates = {
 };
 
 export default function Home() {
-  const [place, setPlace] = useAtom(placeAtom);
-  const [loadingCity, setLoading] = useAtom(loadingCityAtom);
+  const [place] = useAtom(placeAtom);
+  const [loadingCity] = useAtom(loadingCityAtom);
 
-  const { isPending, error, data, refetch } = useQuery<WeatherData>({
+  const { isPending, data, refetch } = useQuery<WeatherData>({
     queryKey: ["repoData"],
     queryFn: async () => {
       const { data } = await axios.get(
@@ -105,7 +102,7 @@ export default function Home() {
 
   useEffect(() => {
     refetch();
-  }, [place]);
+  }, [place, refetch]);
 
   const firstData = data?.list[0];
 

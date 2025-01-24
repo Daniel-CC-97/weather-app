@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { IoSunny } from "react-icons/io5";
 import { FaLocationDot } from "react-icons/fa6";
 import { MdMyLocation } from "react-icons/md";
@@ -28,11 +28,14 @@ export default function Navbar({ location }: Props) {
         const response = await axios.get(
           `https://api.openweathermap.org/data/2.5/find?q=${value}&appid=${API_KEY}`
         );
-        const suggestions = response.data.list.map((item: any) => item.name);
+        const suggestions = response.data.list.map(
+          (item: { name: string }) => item.name
+        );
         setSuggestions(suggestions);
         setError("");
         setShowSuggestions(true);
       } catch (error) {
+        console.error("Error: ", error);
         setSuggestions([]);
         setShowSuggestions(false);
       }
@@ -77,6 +80,7 @@ export default function Navbar({ location }: Props) {
             setPlace(response.data.name);
           }, 500);
         } catch (error) {
+          console.error("Error: ", error);
           setLoading(false);
         }
       });
