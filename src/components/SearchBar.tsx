@@ -23,7 +23,7 @@ export default function SearchBar(props: Props) {
         value={props.value}
         onChange={props.onChange}
         placeholder="Search Location..."
-        className="p-2 rounded-l text-black-900 bg-black-300 focus:outline-none focus:border-bg-black-900"
+        className="p-2 rounded-l rounded-r-none text-black-900 bg-black-300 focus:outline-none focus:border-bg-black-900"
       ></input>
       <button className="rounded-r bg-black-300 p-2">
         <FaSearch className="text-2xl text-black-600 cursor-pointer hover:opacity-80" />
