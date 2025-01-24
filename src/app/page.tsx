@@ -204,7 +204,7 @@ export default function Home() {
                     )}
                   ></WeatherIcon>
                 </Container>
-                <Container className="bg-black-800 justify-between px-6 gap-4 overflow-x-auto">
+                <Container className="bg-black-600 justify-between px-6 gap-4 overflow-x-auto">
                   <WeatherDetails
                     visibility={msToKms(firstData?.visibility ?? 0)}
                     airPressure={`${firstData?.main.pressure} hPa`}
