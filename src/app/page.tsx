@@ -107,8 +107,6 @@ export default function Home() {
     refetch();
   }, [place]);
 
-  console.log("allData: ", data);
-
   const firstData = data?.list[0];
 
   const uniqueDates = [
@@ -184,7 +182,7 @@ export default function Home() {
                           {format(parseISO(weatherData.dt_txt), "h:mm a")}
                         </p>
                         <WeatherIcon
-                          iconName={getDayOrNightIcon(
+                          iconname={getDayOrNightIcon(
                             weatherData.weather[0].icon,
                             weatherData.dt_txt
                           )}
@@ -203,7 +201,7 @@ export default function Home() {
                     {firstData?.weather[0].description}
                   </p>
                   <WeatherIcon
-                    iconName={getDayOrNightIcon(
+                    iconname={getDayOrNightIcon(
                       firstData?.weather[0].icon ?? "",
                       firstData?.dt_txt ?? ""
                     )}
@@ -231,7 +229,6 @@ export default function Home() {
             <section className="flex flex-col w-full gap-4">
               <p className="text-2xl">Forecast (7 days)</p>
               {firstDataforEach.map((d, index) => {
-                console.log("d: ", d);
                 return (
                   <ForecastWeatherDetail
                     key={index}
