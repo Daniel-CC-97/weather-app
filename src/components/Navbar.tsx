@@ -163,7 +163,7 @@ function SuggestionBox({
             <li
               key={index}
               onClick={() => handleSuggestionClick(item)}
-              className="cursor-pointer p-1 rounded hover:bg-black-200"
+              className="cursor-pointer p-1 rounded hover:bg-black-200 hover:text-black-900"
             >
               {item}
             </li>

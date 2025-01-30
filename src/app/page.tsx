@@ -1,4 +1,6 @@
-"use client";
+"use client"; // Ensures this component runs on the client side
+
+// Importing UI components and utilities
 import Container from "@/components/Container";
 import ForecastWeatherDetail from "@/components/ForecastWeatherDetail";
 import Navbar from "@/components/Navbar";
@@ -13,7 +15,8 @@ import axios from "axios";
 import { format, fromUnixTime, parseISO } from "date-fns";
 import { useAtom } from "jotai";
 import { loadingCityAtom, placeAtom } from "./atom";
-import { useEffect } from "react";
+
+// Type definitions for weather data
 
 type WeatherData = {
   cod: string;
@@ -86,26 +89,24 @@ type Coordinates = {
 };
 
 export default function Home() {
+  // Using global state atoms for location and loading status
   const [place] = useAtom(placeAtom);
   const [loadingCity] = useAtom(loadingCityAtom);
 
-  const { isPending, data, refetch } = useQuery<WeatherData>({
-    queryKey: ["repoData"],
+  // Fetch weather data using react-query
+  const { isPending, data } = useQuery<WeatherData>({
+    queryKey: ["weatherData", place], // Improved query key
     queryFn: async () => {
       const { data } = await axios.get(
         `https://api.openweathermap.org/data/2.5/forecast?q=${place}&appid=${process.env.NEXT_PUBLIC_WEATHER_KEY}&cnt=56`
       );
-
       return data;
     },
   });
 
-  useEffect(() => {
-    refetch();
-  }, [place, refetch]);
+  const firstData = data?.list[0]; // Get first forecast entry
 
-  const firstData = data?.list[0];
-
+  // Extract unique dates from forecast data
   const uniqueDates = [
     ...new Set(
       data?.list.map(
@@ -114,6 +115,7 @@ export default function Home() {
     ),
   ];
 
+  // Get first data entry for each unique date
   const firstDataforEach = uniqueDates.map((date) => {
     return data?.list.find((entry) => {
       const entryDate = new Date(entry.dt * 1000).toISOString().split("T")[0];
@@ -122,6 +124,7 @@ export default function Home() {
     });
   });
 
+  // Display loading animation if data is still being fetched
   if (isPending)
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -130,12 +133,14 @@ export default function Home() {
     );
   return (
     <div className="flex flex-col gap-4 min-h-screen">
+      {/* Navbar with city name and search bar */}
       <Navbar location={data?.city.name}></Navbar>
       <main className="px-3 max-w-7xl mx-auto flex flex-col gap-9 w-full pb-10 pt-0 md:pt-4">
         {loadingCity ? (
           <WeatherSkeleton></WeatherSkeleton>
         ) : (
           <>
+            {/* Display today's weather */}
             <section className="space-y-4">
               <div className="space-y-2">
                 <h2 className="flex gap-1 text-2xl items-end">
@@ -223,6 +228,7 @@ export default function Home() {
               </div>
             </section>
 
+            {/* Display 7-day forecast */}
             <section className="flex flex-col w-full gap-4">
               <p className="text-2xl">Forecast (7 days)</p>
               {firstDataforEach.map((d, index) => {
@@ -260,6 +266,7 @@ export default function Home() {
   );
 }
 
+// Skeleton loader component for when weather data is loading
 function WeatherSkeleton() {
   return (
     <main className="px-3 max-w-7xl mx-auto flex flex-col gap-9 w-full pb-10 pt-4 animate-pulse">
